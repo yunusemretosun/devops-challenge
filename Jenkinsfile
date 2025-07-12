@@ -28,11 +28,6 @@ spec:
     - name: workspace-volume
       emptyDir: {}
 
-    # Docker socket
-    - name: dockersock
-      hostPath:
-        path: /var/run/docker.sock
-        type: Socket
 '''
     }
   }
