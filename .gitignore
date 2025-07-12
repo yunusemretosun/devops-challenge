@@ -49,3 +49,12 @@ Thumbs.db
 *.log
 tmp/
 
+# yalnızca helm-charts içindeki otomatik dokümanlar
+helm-charts/**/CHANGELOG.md
+helm-charts/**/UPGRADING.md
+helm-charts/**/README.md
+helm-charts/**/VALUES.md
+helm-charts/**/VALUES.md.gotmpl
+helm-charts/**/*.tgz
+helm-charts/**/index.yaml
+

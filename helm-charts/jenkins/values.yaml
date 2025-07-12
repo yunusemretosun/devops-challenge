@@ -1,0 +1,20 @@
+controller:
+  # Servis tipi
+  serviceType: NodePort
+
+  # Docker-in-Docker sidecar
+  extraContainers:
+    - name: docker-dind
+      image: docker:24.0.5-dind
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+
+  extraVolumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock
+        type: Socket
+
