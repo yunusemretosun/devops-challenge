@@ -40,6 +40,14 @@ else
   echo ">>> Helm zaten kurulu: $(helm version --template='v{{ .Version }}')"
 fi
 
+# -----------------------------
+# Helm Repos
+# -----------------------------
+echo ">>> Helm repo’ları ekleniyor ve güncelleniyor..."
+helm repo add jenkins   https://charts.jenkins.io       2>/dev/null || echo "jenkins repo zaten var"
+helm repo add bitnami   https://charts.bitnami.com/bitnami 2>/dev/null || echo "bitnami repo zaten var"
+helm repo update
+
 ### Son Kontrol
 echo
 echo ">>> Tüm yüklemeler tamamlandı. Sürümler:"
