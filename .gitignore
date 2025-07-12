@@ -1,0 +1,51 @@
+# -----------------------------
+# Terraform
+# -----------------------------
+# State dosyaları
+terraform.tfstate
+terraform.tfstate.backup
+# Local state klasörü ve lock dosyaları
+.terraform/
+*.tfstate.*
+*.tfstate.lock.info
+.terraform.lock.hcl
+
+# -----------------------------
+# Kubernetes / kubeconfig
+# -----------------------------
+# Kendi kubeconfig’ini repoya ekleme
+.kube/
+# Örnek config tutmak istersen:
+!/.kube/config.example
+
+# -----------------------------
+# Helm
+# -----------------------------
+# Chart bağımlılık paketleri
+helm-charts/**/charts/
+
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*~ 
+
+# -----------------------------
+# IDE & Editör
+# -----------------------------
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.sln
+*.sw?
+
+# -----------------------------
+# OS & Temp
+# -----------------------------
+.DS_Store
+Thumbs.db
+*.log
+tmp/
+
