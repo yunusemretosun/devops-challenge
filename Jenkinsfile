@@ -6,28 +6,22 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-    # 1) Jenkins inbound agent
     - name: jnlp
       image: jenkins/inbound-agent:latest
-      args: ['\\$(JENKINS_SECRET)','\\$(JENKINS_NAME)']
+      args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
       volumeMounts:
         - name: workspace-volume
           mountPath: /home/jenkins/agent
 
-    # 2) Docker-in-Docker
     - name: docker
       image: docker:24.0.5-dind
       securityContext:
         privileged: true
-      volumeMounts:
-        - name: dockersock
-          mountPath: /var/run/docker.sock
+      # Burada docker.sock mount edilmiyor!
 
   volumes:
-    # Workspace
     - name: workspace-volume
       emptyDir: {}
-
 '''
     }
   }
@@ -93,7 +87,7 @@ spec:
 
   post {
     success {
-      echo "✅ Deploy başarılı! http://\$NODE_IP:\$NODE_PORT adresinden test edebilirsiniz."
+      echo "✅ Deploy başarılı! Uygulama deploy edildi."
     }
     failure {
       echo "❌ Bir hata oluştu, console output’a bakın."
