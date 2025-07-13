@@ -5,6 +5,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  serviceAccountName: jenkins-deployer
   containers:
     - name: jnlp
       image: jenkins/inbound-agent:latest
