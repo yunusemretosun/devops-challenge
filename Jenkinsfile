@@ -17,7 +17,6 @@ spec:
       image: docker:24.0.5-dind
       securityContext:
         privileged: true
-      # Burada docker.sock mount edilmiyor!
 
   volumes:
     - name: workspace-volume
@@ -27,9 +26,8 @@ spec:
   }
 
   environment {
-    REGISTRY   = "docker.io/yunusemretosun"
+    REGISTRY   = "yunusemretosun"
     IMAGE_NAME = "example-app"
-    CHART_PATH = "helm-charts/application"
   }
 
   stages {
@@ -46,7 +44,7 @@ spec:
         container('docker') {
           sh """
             docker build \
-              -t \$REGISTRY/\$IMAGE_NAME:\${BUILD_NUMBER} \
+              -t $REGISTRY/$IMAGE_NAME:${BUILD_NUMBER} \
               applications/example-app
           """
         }
@@ -62,7 +60,7 @@ spec:
               passwordVariable: 'DOCKER_PASS'
           )]) {
             sh """
-              echo \$DOCKER_PASS | docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
+              echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin
               docker push \$REGISTRY/\$IMAGE_NAME:\${BUILD_NUMBER}
             """
           }
@@ -82,15 +80,6 @@ spec:
           """
         }
       }
-    }
-  }
-
-  post {
-    success {
-      echo "✅ Deploy başarılı! Uygulama deploy edildi."
-    }
-    failure {
-      echo "❌ Bir hata oluştu, console output’a bakın."
     }
   }
 }
