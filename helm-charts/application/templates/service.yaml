@@ -8,5 +8,5 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: 5000
   selector:
-    app: {{ include "example-app.name" . }}
+    app: {{ .Release.Name }}
 
