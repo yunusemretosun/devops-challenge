@@ -18,6 +18,11 @@ spec:
       securityContext:
         privileged: true
 
+    - name: helm
+      image: alpine/helm:3.14.4
+      command:
+        - cat
+      tty: true
   volumes:
     - name: workspace-volume
       emptyDir: {}
@@ -70,7 +75,7 @@ spec:
 
     stage('Deploy with Helm') {
       steps {
-        container('docker') {
+        container('helm') {
           sh """
             helm upgrade --install example-app \$CHART_PATH \
               --namespace default \
