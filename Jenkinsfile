@@ -31,10 +31,14 @@ spec:
   }
 
   environment {
-    REGISTRY   = "yunusemretosun"
-    IMAGE_NAME = "example-app"
-  }
-
+    REGISTRY    = "yunusemretosun"
+    IMAGE_NAME  = "example-app"
+    CHART_ROOT  = "helm-charts"
+    CHART_NAME  = "application"
+    CHART_PATH  = "${CHART_ROOT}/${CHART_NAME}"
+    NAMESPACE   = "default"
+    RELEASE     = "example-app"
+}
   stages {
     stage('Checkout') {
       steps {
