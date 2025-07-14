@@ -8,7 +8,7 @@ echo "=== 1) Installing CLI tools ==="
 # 2) k3s cluster’ı kur (Terraform)
 echo
 echo "=== 2) Terraform apply for k3s ==="
-pushd terraform >/dev/null
+pushd terraform_files >/dev/null
 terraform init
 terraform apply -auto-approve
 popd >/dev/null
