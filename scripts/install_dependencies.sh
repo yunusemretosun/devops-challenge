@@ -5,7 +5,7 @@ echo ">>> Paket listelerini güncelliyorum..."
 sudo apt update && sudo apt upgrade -y
 
 echo ">>> Gerekli genel paketleri yüklüyorum..."
-sudo apt-get install -y curl git gnupg software-properties-common apt-transport-https ca-certificates unzip
+sudo apt-get install -y curl git gnupg postgresql-client software-properties-common apt-transport-https ca-certificates unzip
 
 ### Terraform kurulumu
 if ! command -v terraform &>/dev/null; then
