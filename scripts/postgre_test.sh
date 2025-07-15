@@ -11,12 +11,12 @@ PGUSER=$(kubectl get secret $SECRET_NAME -n $NAMESPACE -o jsonpath="{.data.usern
 PGPASS=$(kubectl get secret $SECRET_NAME -n $NAMESPACE -o jsonpath="{.data.password}" | base64 -d)
 PGDB=$(kubectl get secret $SECRET_NAME -n $NAMESPACE -o jsonpath="{.data.database}" | base64 -d)
 
-echo "Tabloyu oluşturuyor (varsa atlar):"
+echo "Creating tables (skip if exists):"
 PGPASSWORD=$PGPASS psql -h $PG_HOST -p $PG_PORT -U $PGUSER -d $PGDB -c "CREATE TABLE IF NOT EXISTS testtable(id SERIAL PRIMARY KEY, name TEXT);"
 
-echo "Veri ekleniyor:"
+echo "Adding data:"
 PGPASSWORD=$PGPASS psql -h $PG_HOST -p $PG_PORT -U $PGUSER -d $PGDB -c "INSERT INTO testtable(name) VALUES('hello_persistent');"
 
-echo "Veri kontrol:"
+echo "Checking data:"
 PGPASSWORD=$PGPASS psql -h $PG_HOST -p $PG_PORT -U $PGUSER -d $PGDB -c "SELECT * FROM testtable;"
 
