@@ -1,0 +1,114 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins-deployer
+  containers:
+    - name: helm
+      image: alpine/helm:3.14.4
+      command:
+        - cat
+      tty: true
+  restartPolicy: Never
+'''
+    }
+  }
+
+  environment {
+    PG_NAMESPACE    = "postgresql"
+    REDIS_NAMESPACE = "redis"
+    PG_VALUES       = "helm-charts/postgresql/values.yaml"
+    REDIS_VALUES    = "helm-charts/redis/values.yaml"
+    PG_SECRET       = "my-postgres-secret"
+    REDIS_SECRET    = "redis-secret"
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git url: 'https://github.com/yunusemretosun/devops-challenge.git',
+            branch: 'main',
+            credentialsId: 'git-creds'
+      }
+    }
+
+    stage('Create Namespaces') {
+      steps {
+        container('helm') {
+          sh '''
+            kubectl create ns $PG_NAMESPACE --dry-run=client -o yaml | kubectl apply -f - || true
+            kubectl create ns $REDIS_NAMESPACE --dry-run=client -o yaml | kubectl apply -f - || true
+          '''
+        }
+      }
+    }
+
+    stage('Create Secrets') {
+      steps {
+        container('helm') {
+          withCredentials([
+            string(credentialsId: 'postgres-password', variable: 'POSTGRES_PASS'),
+            string(credentialsId: 'redis-password', variable: 'REDIS_PASS')
+          ]) {
+            sh '''
+              kubectl create secret generic $PG_SECRET \
+                --from-literal=postgres-password=$POSTGRES_PASS \
+                --from-literal=password=$POSTGRES_PASS \
+                -n $PG_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+              kubectl create secret generic $REDIS_SECRET \
+                --from-literal=redis-password=$REDIS_PASS \
+                -n $REDIS_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Add Helm Repo') {
+      steps {
+        container('helm') {
+          sh '''
+            helm repo add bitnami https://charts.bitnami.com/bitnami || true
+            helm repo update
+          '''
+        }
+      }
+    }
+
+    stage('Deploy PostgreSQL') {
+      steps {
+        container('helm') {
+          sh '''
+            helm upgrade --install postgresql bitnami/postgresql \
+              -n $PG_NAMESPACE -f $PG_VALUES
+          '''
+        }
+      }
+    }
+
+    stage('Deploy Redis') {
+      steps {
+        container('helm') {
+          sh '''
+            helm upgrade --install redis bitnami/redis \
+              -n $REDIS_NAMESPACE -f $REDIS_VALUES
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "PostgreSQL and Redis deployed successfully!"
+    }
+    failure {
+      echo "Deployment failed. Check the logs for details."
+    }
+  }
+}
+
