@@ -55,5 +55,6 @@ helm-charts/**/UPGRADING.md
 helm-charts/**/VALUES.md
 helm-charts/**/VALUES.md.gotmpl
 helm-charts/**/*.tgz
+helm-charts/**/README.md
 helm-charts/**/index.yaml
 
