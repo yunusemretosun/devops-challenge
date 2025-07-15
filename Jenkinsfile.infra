@@ -34,6 +34,16 @@ spec:
             credentialsId: 'git-creds'
       }
     }
+    
+    stage('Apply RBAC Roles') {
+    steps {
+      container('helm') {
+        sh '''
+          kubectl apply -f helm-charts/jenkins/roles.yaml
+        '''
+      }
+    }
+  }
 
     stage('Create Namespaces') {
       steps {
