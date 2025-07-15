@@ -8,7 +8,7 @@ spec:
   serviceAccountName: jenkins-deployer
   containers:
     - name: helm
-      image: bitnami/kubectl:latest
+      image: lachlanevenson/k8s-helm:v3.14.4
       command:
         - cat
       tty: true
