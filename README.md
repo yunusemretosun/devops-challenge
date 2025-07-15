@@ -70,22 +70,6 @@ kubectl create secret generic my-postgres-secret \
 kubectl create secret generic redis-secret \
   --from-literal=redis-password=<changeme> \
   -n redis
-
-# Install Jenkins
-helm upgrade --install jenkins jenkins/jenkins \
-  --namespace jenkins \
-  --create-namespace \
-  -f helm-charts/jenkins/values.yaml \
-  --wait --timeout 3m
-
-#required roles for deployment all namespaces
-kubectl apply -f helm-charts/jenkins/roles.yaml
-
-#Get Jenkins UI credentials
-kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
-
-#Access Jenkins UI
-echo "http://$(hostname -I | awk '{print $1}'):30080"
 	
 # Install PostgreSQL
 helm upgrade --install postgresql bitnami/postgresql \
