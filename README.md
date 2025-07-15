@@ -50,7 +50,7 @@ kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/sec
 echo "http://$(hostname -I | awk '{print $1}'):30080"
 
 #Install PostgreSQL and Redis with Jenkinsfile.infra
-
+![Jenkins Credentials](images/jenkins-secrets.png)
 
 
 
