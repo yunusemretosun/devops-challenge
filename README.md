@@ -59,4 +59,13 @@ helm upgrade --install postgresql bitnami/postgresql \
 # Redis’i kur
 helm upgrade --install redis bitnami/redis \
   -n redis -f helm-charts/redis/values.yaml
-   
+```
+### 3. Test
+```sh
+#Postgresql testi
+bash scripts/postgre_test.sh
+
+#Redis Testi
+bash scripts/redis_test.sh
+
+ 
