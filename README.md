@@ -2,13 +2,15 @@
 
 ## Project Scope
 
-- Tüm kurulum ve yönetim adımları tek bir repoda tutulur.
-- Tüm parola ve hassas bilgiler Kubernetes Secret olarak saklanır.
-- PostgreSQL ve Redis Helm Chart ile kurulup yapılandırılır.
-- Jenkins ile uygulama build/deploy işlemleri yapılır.
-- Yedekleme ve dış erişim dahil, PostgreSQL ile veri kalıcılığı sağlanır.
-- Redis ile cache kullanılabilir.
-- CLI ile kurulum ve test scriptleriyle her şey doğrulanabilir.
+- All setup and management steps are versioned in a single Git repository.
+- All passwords and sensitive information are stored as Kubernetes Secrets.
+- PostgreSQL and Redis are installed and configured via Helm Charts.
+- Jenkins is used for building and deploying applications.
+- Data persistence and daily backups are configured for PostgreSQL.
+- Redis is available for caching.
+- Everything is installable and testable via provided CLI scripts.
+
+---
 
 ## Installation
 
@@ -24,15 +26,16 @@
 ```sh
 git clone https://github.com/yunusemretosun/devops-challenge.git
 cd devops-case
-
+```
 2. Setup environment and dependencies:
+```sh
 bash scripts/setup_environment.sh
-
+```
 3. Deploy Jenkins, PostgreSQL and Redis
 # Create Namespaces
+```sh
 kubectl create ns postgresql
 kubectl create ns redis
-
 # Create secrets (replace <changeme> with secure passwords)
 kubectl create secret generic my-postgres-secret \
   --from-literal=postgres-password=<changeme> \
@@ -42,7 +45,7 @@ kubectl create secret generic my-postgres-secret \
 kubectl create secret generic redis-secret \
   --from-literal=redis-password=<changeme> \
   -n redis
-	
+
 # Install Jenkins
 helm upgrade --install jenkins jenkins/jenkins \
   --namespace jenkins \
