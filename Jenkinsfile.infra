@@ -20,10 +20,10 @@ spec:
   environment {
     PG_NAMESPACE    = "postgresql"
     REDIS_NAMESPACE = "redis"
-    PG_VALUES       = "helm-charts/postgresql/values.yaml"
-    REDIS_VALUES    = "helm-charts/redis/values.yaml"
     PG_SECRET       = "my-postgres-secret"
     REDIS_SECRET    = "redis-secret"
+    PG_VALUES       = "helm-charts/postgresql/values.yaml"
+    REDIS_VALUES    = "helm-charts/redis/values.yaml"
   }
 
   stages {
@@ -51,12 +51,13 @@ spec:
         container('helm') {
           withCredentials([
             string(credentialsId: 'postgres-password', variable: 'POSTGRES_PASS'),
+            string(credentialsId: 'devuser-password', variable: 'DEVUSER_PASS'),
             string(credentialsId: 'redis-password', variable: 'REDIS_PASS')
           ]) {
             sh '''
               kubectl create secret generic $PG_SECRET \
                 --from-literal=postgres-password=$POSTGRES_PASS \
-                --from-literal=password=$POSTGRES_PASS \
+                --from-literal=password=$DEVUSER_PASS \
                 -n $PG_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
 
               kubectl create secret generic $REDIS_SECRET \
