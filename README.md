@@ -26,11 +26,9 @@ git clone <repo-url>
 cd devops-case
 
 2. Ortam Kurulumu:
-```sh
 bash scripts/setup_environment.sh
 
 3. Jenkins,redis,postgresql Kurulumu
-```sh
 # Namespace oluştur
 kubectl create ns postgresql
 kubectl create ns redis
