@@ -22,7 +22,7 @@
 
 1. Depoyu klonla:
 ```sh
-git clone <repo-url>
+git clone https://github.com/yunusemretosun/devops-challenge.git
 cd devops-case
 
 2. Ortam Kurulumu:
