@@ -48,13 +48,14 @@ kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/sec
 
 #Access Jenkins UI
 echo "http://$(hostname -I | awk '{print $1}'):30080"
-
+```
 #Install PostgreSQL and Redis with Jenkinsfile.infra
 ![Jenkins Credentials](images/secrets.png)
 
 
 
 #Install PostgreSQL and Redis Manuel
+```sh
 # Create namespaces
 kubectl create ns postgresql
 kubectl create ns redis
