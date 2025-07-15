@@ -49,12 +49,14 @@ kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/sec
 #Access Jenkins UI
 echo "http://$(hostname -I | awk '{print $1}'):30080"
 ```
-#Install PostgreSQL and Redis with Jenkinsfile.infra
+3.1 Install PostgreSQL and Redis with Jenkinsfile.infra (Secure way)
+
+Before running the pipeline, create these credentials in Jenkins as shown below:
 ![Jenkins Credentials](images/secrets.png)
 
+Then, create a new pipeline using Jenkinsfile.infra and start the build.
 
-
-#Install PostgreSQL and Redis Manuel
+3.2 Install PostgreSQL and Redis Manually
 ```sh
 # Create namespaces
 kubectl create ns postgresql
