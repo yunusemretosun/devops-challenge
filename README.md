@@ -21,13 +21,13 @@
 ### 2. Kurulum
 
 1. Depoyu klonla:
-   ```sh
-   git clone <repo-url>
-   cd devops-case
+```sh
+git clone <repo-url>
+cd devops-case
 
 2. Ortam Kurulumu:
-   ```sh
-   bash scripts/setup_environment.sh
+```sh
+bash scripts/setup_environment.sh
 
 3. Jenkins,redis,postgresql Kurulumu
 ```sh
@@ -51,6 +51,8 @@ helm upgrade --install jenkins jenkins/jenkins \
   --create-namespace \
   -f helm-charts/jenkins/values.yaml \
   --wait --timeout 3m
+#requeired roles for deployment all namespaces
+kubectl apply -f helm-charts/jenkins/roles.yaml
 	
 # PostgreSQL’i kur
 helm upgrade --install postgresql bitnami/postgresql \
