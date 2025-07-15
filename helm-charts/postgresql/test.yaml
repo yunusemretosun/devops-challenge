@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: check-backup
+  namespace: postgresql
+spec:
+  containers:
+  - name: shell
+    image: bitnami/postgresql:latest
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: backup-volume
+      mountPath: /backups
+  volumes:
+  - name: backup-volume
+    persistentVolumeClaim:
+      claimName: postgresql-pgdumpall   # PVC adi uyusmali
+  restartPolicy: Never
+

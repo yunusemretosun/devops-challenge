@@ -1,6 +1,3 @@
 controller:
-  admin:
-    existingSecret: jenkins-admin-secret
-    passwordKey: jenkins-admin-password
   serviceType: NodePort
   nodePort: 30080

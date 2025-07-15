@@ -2,15 +2,27 @@ auth:
   existingSecret: my-postgres-secret
   username: devuser
   database: devdb
-  # passwords stored in secret
 
 primary:
   service:
     type: NodePort
     nodePorts:
-      postgresql: 31253   # any 30k port
+      postgresql: 31253
 
 persistence:
   enabled: true
   size: 5Gi
+
+backup:
+  enabled: true
+  cronjob:
+    schedule: "0 2 * * *"
+    successfulJobsHistoryLimit: 3
+    failedJobsHistoryLimit: 3
+    concurrencyPolicy: "Forbid"
+  retentionDays: 7
+  destination: "/backups"
+  persistence:
+    enabled: true
+    size: 2Gi         # Yedekler icin ayrı PVC (istege gore artir)
 
