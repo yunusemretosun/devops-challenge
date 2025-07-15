@@ -32,8 +32,8 @@ cd devops-case
 bash scripts/setup_environment.sh
 ```
 3. Deploy Jenkins, PostgreSQL and Redis
-# Create Namespaces
 ```sh
+# Create namespaces
 kubectl create ns postgresql
 kubectl create ns redis
 # Create secrets (replace <changeme> with secure passwords)
