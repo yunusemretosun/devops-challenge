@@ -51,6 +51,12 @@ helm upgrade --install jenkins jenkins/jenkins \
   --wait --timeout 3m
 #required roles for deployment all namespaces
 kubectl apply -f helm-charts/jenkins/roles.yaml
+
+#ui credentials
+kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+
+#access ui via.
+echo "http://$(hostname -I | awk '{print $1}'):30080"
 	
 # PostgreSQL’i kur
 helm upgrade --install postgresql bitnami/postgresql \
