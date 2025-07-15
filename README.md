@@ -1,6 +1,4 @@
-# DevOps Challenge – Local Kubernetes Demo
-
-Bu repoda, yerel bir Kubernetes ortamında PostgreSQL, Redis ve örnek bir uygulamanın CI/CD ile yönetimini bulacaksınız.
+# DevOps Challenge
 
 ## Proje Kapsamı
 
@@ -17,7 +15,7 @@ Bu repoda, yerel bir Kubernetes ortamında PostgreSQL, Redis ve örnek bir uygul
 ### 1. Gereksinimler
 
 - Ubuntu 22.04+ (boş sanal makine)
-- `curl`, `git`, `kubectl`, `helm`, `terraform` (otomatik kurulur)
+- `curl`, `redis-cli`, `psql`, `git`, `kubectl`, `helm`, `terraform` (otomatik kurulur)
 - DockerHub hesabı (örnek uygulama için)
 
 ### 2. Kurulum
