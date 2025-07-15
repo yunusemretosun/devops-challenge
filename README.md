@@ -1,7 +1,7 @@
 # DevOps Challenge
 
 ## Project Scope
-
+- Provisioned via Terraform(K3s)
 - All setup and management steps are versioned in a single Git repository.
 - All passwords and sensitive information are stored as Kubernetes Secrets.
 - PostgreSQL and Redis are installed and configured via Helm Charts.
