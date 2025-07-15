@@ -10,17 +10,23 @@ metadata:
   name: jenkins-deployer
 rules:
   - apiGroups: [""]
-    resources: ["namespaces", "secrets", "serviceaccounts", "pods"]
+    resources: ["configmaps", "endpoints", "persistentvolumes", "services", "namespaces", "secrets", "serviceaccounts", "pods", "persistentvolumeclaims"]
     verbs: ["*"]
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets", "replicasets"]
     verbs: ["*"]
   - apiGroups: ["batch"]
-    resources: ["jobs"]
+    resources: ["jobs", "cronjobs"]
     verbs: ["*"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["networkpolicies"]
     verbs: ["*"]
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["get", "list", "create", "update", "patch", "apply"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
