@@ -49,7 +49,7 @@ helm upgrade --install jenkins jenkins/jenkins \
   --create-namespace \
   -f helm-charts/jenkins/values.yaml \
   --wait --timeout 3m
-#requeired roles for deployment all namespaces
+#required roles for deployment all namespaces
 kubectl apply -f helm-charts/jenkins/roles.yaml
 	
 # PostgreSQL’i kur
